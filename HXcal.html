@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        color: aliceblue;
+    }
+
+    table {
+        width: 700px;
+        margin: auto;
+        border: 2px solid black;
+    }
+
+    /*表表*/
+    th, td {padding: 0px;}
+    th {height: 50px; font-size: 30px;}
+    td {height: 120px; font-size: 20px;}
+    tr {
+        /* text-align: center; */
+    }
+
+    .cl_bg {
+        font-size: 30px;
+    }
+
+    .cl_st {
+        font-size: 20px;
+    }
+
+    /*農曆*-/
+    .cl_topgray{background-color: lightblue;}
+    .cl_top{background-color: lightpink;}
+    .cl_topgreen{background-color: lightgreen;}
+    .cl_topred{background-color: lightcoral;} */
+
+
+    .col {
+        background-color: lightgray;
+    }
+
+    /*前後月日期格*/
+    /*本月日期格無標籤*/
+    .cc_bggray {
+        background-color: lightgray;
+    }
+
+    /*全日期格*/
+    .cl_over {}
+
+    . {}
+
+    /*日期格頂部*/
+    .cl_num {background-color: lightcoral; padding-left: 8px;}
+    .cl_numgray {background-color: lightgray; padding-left: 8px;}
+
+    /*日期格中部*/
+    .cl_main {background-color: lightgray;}
+    .cl_maingray {background-color: lightgray;}
+
+    /*表頭六日紅字*/
+    .workday {color: black;}
+    .holiday {color: Red;}
+
+    
+</style>
+
+<body>
+    <table rules="all">
+        <tbody >
+            <tr>
+                <th class="holiday">日</th>
+                <th class="workday">一</th>
+                <th class="workday">二</th>
+                <th class="workday">三</th>
+                <th class="workday">四</th>
+                <th class="workday">五</th>
+                <th class="holiday">六</th>
+            </tr>
+            <tr valign="top">
+                <td class="cc_bggray cl_over">
+                        <div class="cl_numgray">30</div>
+                        <div class="cl_maingray"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">01</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">02</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">03</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">04</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">05</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">06</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td class="cl_over">
+                        <div class="cl_topred">
+                        </div>
+                        <div class="cl_num">07</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">08</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">09</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">10</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">11</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">12</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">13</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td class="cl_over">
+                        <div class="cl_num">14</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">15</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">16</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">17</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">18</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">19</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">20</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td class="cl_over">
+                        <div class="cl_topred">
+                        </div>
+                        <div class="cl_num">21</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">22</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">23</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">24</div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">25</div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">26</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">27</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td class="cl_over">
+                        <div class="cl_num">28</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">29</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">30</div>
+                        <div class="cl_main"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cl_over">
+                        <div class="cl_num">31</div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cc_bggray cl_over">
+                        <div class="cl_numgray">01</div>
+                        <div class="cl_maingray"></div>
+                    </div>
+                    <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cc_bggray cl_over">
+                        <div class="cl_numgray">02</div>
+                        <div class="cl_maingray"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+                <td class="cc_bggray cl_over">
+                        <div class="cl_numgray">03</div>
+                        <div class="cl_maingray"></div>
+                        <div class="cl_st"></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>
