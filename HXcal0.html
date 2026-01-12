@@ -20,28 +20,36 @@
             font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
             background-color: #f8f9fa;
             margin: 0;
-            padding: 15px;
+            padding: 20px;
             color: var(--text-main);
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
+        /* RWD 容器佈局 */
         .main-wrapper {
             display: flex;
             flex-direction: row;
-            gap: 24px;
+            /* gap: 24px; */
             max-width: 1200px;
             width: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
         }
 
         /* 左側月曆區 */
         .container_l {
             flex: 2;
-            /* background: white; */
+            background: white;
             border-radius: 12px;
             /* box-shadow: 0 4px 6px rgba(0,0,0,0.05); */
-            padding: 20px;
+            padding: 10px;
+            overflow-x: auto; /* 防止手機版破版 */
         }
 
         /* 右側薪資區 */
@@ -49,12 +57,12 @@
             flex: 1;
             background: white;
             border-radius: 12px;
-            /* box-shadow: 0 4px 6px rgba(0,0,0,0.05); */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             padding: 20px;
             height: fit-content;
         }
 
-        /* 導航標題 */
+        /* 導航標題樣式 */
         .calendar-nav {
             display: flex;
             justify-content: space-between;
@@ -70,79 +78,74 @@
             border-radius: 6px;
         }
 
-        .this_moon { font-size: 20px; font-weight: 800; }
+        .calendar-nav a:hover {
+            background: var(--primary-blue);
+        }
 
-        /* 表格基礎設定 */
+        .this_moon {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        /* 月曆表格樣式 */
         .calendar-table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed; /* 確保七格均分螢幕寬度 */
+            table-layout: fixed;
+            min-width: 600px; /* 保證月曆在小螢幕也有基本寬度可滑動 */
         }
 
         .calendar-table th {
-            padding: 12px 4px;
+            background-color: #fff;
+            color: var(--text-main);
+            padding: 12px;
             border-bottom: 2px solid var(--border-color);
             font-weight: 600;
         }
 
         th.week {
-            font-family: Impact, sans-serif;
-            background-color:#1976d2;
-            color: white;
-        }
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-weight:bold;
+        background-color:#1976d2;
+        color: white;
+    }
         th.weekend { color: #ff5252; }
 
         .calendar-table td {
             border: 1px solid var(--border-color);
             height: 100px;
             vertical-align: top;
-            padding: 8px 4px;
+            padding: 8px;
             position: relative;
         }
 
-        .date_number { font-size: 16px; font-weight: bold; }
-        .attendance { font-size: 18px; font-weight: bold; text-align: center; margin: 8px 0; }
-        
-        /* 哨所名稱樣式 */
-        .date_sentry {
-            font-size: 14px;
+        /* 日期數字 */
+        .date_number {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        /* 出勤狀態卡片化 */
+        .attendance {
+            font-size: 18px;
+            font-weight: bold;
             text-align: center;
-            line-height: 1.2;
-            word-break: break-all;
+            margin: 8px 0;
         }
 
-        /* --- 核心修改：針對手機版滿版優化 --- */
-        @media (max-width: 768px) {
-            body { padding: 10px 0; } /* 移除 body 左右留白 */
-            
-            .main-wrapper { 
-                flex-direction: column; 
-                gap: 12px;
-            }
-
-            .container_l {
-                padding: 10px 5px; /* 縮小月曆容器內距 */
-                border-radius: 0; /* 手機版通常滿版不需圓角 */
-            }
-
-            .calendar-table td {
-                height: 85px; /* 手機版略微降低高度以免過長 */
-            }
-
-            .date_number { font-size: 14px; }
-            .attendance { font-size: 16px; margin: 4px 0; }
+        /*出勤哨所*/
+        .date_sentry {
+            font-size: 15px;
+            text-align: center;
+            /* 移除 white-space: nowrap; */
+        /* 移除 overflow: hidden; */
+    /* 移除 text-overflow: ellipsis; */
+    line-height: 1.2; /* 設定行高讓拆行後不會太擠 */
+    word-break: break-all; /* 強制在任何字元間換行 */
         }
 
-        /* 針對 iPhone SE 等極窄螢幕的拆行處理 */
-        @media (max-width: 480px) {
-            .date_sentry {
-                font-size: 13px;
-                max-width: 2.1em; /* 強制 3-4 字拆成兩行 */
-                margin: 0 auto;
-            }
-        }
-
-        /* 顏色樣式 */
+        /* 狀態顏色 */
         td.date_blue { background-color: lightblue; color: white; }
         td.date_pink { background-color: lightpink; color: white; }
         td.date_gray { background-color: lightgrey; color: aliceblue; }
@@ -150,14 +153,38 @@
         .rest_be { color: #ff5252; }
         .rest_ed { color: lightgray; }
 
-        .salary-table { width: 100%; border-collapse: collapse; }
-        .salary-table td { padding: 12px 8px; border-bottom: 1px solid var(--border-color); }
-        .salary-table .data { text-align: right; font-weight: 600; }
-        .salary-table tr:last-child td { color: var(--primary-text-pink); font-size: 18px; border-bottom: none; }
+        /* 薪資表格優化 */
+        .salary-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .salary-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .salary-table .title {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .salary-table .data {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .salary-table tr:last-child td {
+            border-bottom: none;
+            color: var(--primary-text-pink);
+            font-size: 18px;
+        }
+
         h2 { margin-top: 0; font-size: 20px; border-left: 4px solid var(--primary-text-blue); padding-left: 10px; }
     </style>
 </head>
 <body>
+
 <div class="main-wrapper">
     <div class="container_l">
         <div class="calendar-nav">
