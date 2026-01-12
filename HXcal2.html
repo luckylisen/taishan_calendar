@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人排班與薪資明細</title>
+    <style>
+        :root {
+            --primary-blue: #e3f2fd;
+            --primary-text-blue: #1976d2;
+            --primary-pink: #fce4ec;
+            --primary-text-pink: #d81b60;
+            --gray-bg: #f5f5f5;
+            --border-color: #e0e0e0;
+            --text-main: #333;
+            --text-muted: #888;
+        }
+
+        body {
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 24px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* 左側月曆區 */
+        .container_l {
+            flex: 2;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        /* 右側薪資區 */
+        .container_r {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 20px;
+            height: fit-content;
+        }
+
+        /* 導航標題 */
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-nav a {
+            text-decoration: none;
+            color: var(--primary-text-blue);
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+
+        .this_moon { font-size: 20px; font-weight: 800; }
+
+        /* 表格基礎設定 */
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* 確保七格均分螢幕寬度 */
+        }
+
+        .calendar-table th {
+            padding: 12px 4px;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+        }
+
+        th.week {
+            font-family: Impact, sans-serif;
+            background-color:#1976d2;
+            color: white;
+        }
+        th.weekend { color: #ff5252; }
+
+        .calendar-table td {
+            border: 1px solid var(--border-color);
+            height: 100px;
+            vertical-align: top;
+            padding: 8px 4px;
+            position: relative;
+        }
+
+        .date_number { font-size: 16px; font-weight: bold; }
+        .attendance { font-size: 18px; font-weight: bold; text-align: center; margin: 8px 0; }
+        
+        /* 哨所名稱樣式 */
+        .date_sentry {
+            font-size: 15px;
+            text-align: center;
+            line-height: 1.2;
+            word-break: break-all;
+        }
+
+        /* --- 核心修改：針對手機版滿版優化 --- */
+        @media (max-width: 768px) {
+            body { padding: 10px 0; } /* 移除 body 左右留白 */
+            
+            .main-wrapper { 
+                flex-direction: column; 
+                gap: 12px;
+            }
+
+            .container_l {
+                padding: 10px 5px; /* 縮小月曆容器內距 */
+                border-radius: 0; /* 手機版通常滿版不需圓角 */
+            }
+
+            .calendar-table td {
+                height: 85px; /* 手機版略微降低高度以免過長 */
+            }
+
+            .date_number { font-size: 14px; }
+            .attendance { font-size: 16px; margin: 4px 0; }
+        }
+
+        /* 針對 iPhone SE 等極窄螢幕的拆行處理 */
+        @media (max-width: 480px) {
+            .date_sentry {
+                font-size: 13px;
+                max-width: 2.1em; /* 強制 3-4 字拆成兩行 */
+                margin: 0 auto;
+            }
+        }
+
+        /* 顏色樣式 */
+        td.date_blue { background-color: lightblue; color: white; }
+        td.date_pink { background-color: lightpink; color: white; }
+        td.date_gray { background-color: lightgrey; color: aliceblue; }
+        td.date_white { color: lightgray;}
+        .rest_be { color: #ff5252; }
+        .rest_ed { color: lightgray; }
+
+        .salary-table { width: 100%; border-collapse: collapse; }
+        .salary-table td { padding: 12px 8px; border-bottom: 1px solid var(--border-color); }
+        .salary-table .data { text-align: right; font-weight: 600; }
+        .salary-table tr:last-child td { color: var(--primary-text-pink); font-size: 18px; border-bottom: none; }
+        h2 { margin-top: 0; font-size: 20px; border-left: 4px solid var(--primary-text-blue); padding-left: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <div class="container_l">
+        <div class="calendar-nav">
+            <a href="#">◀</a>
+            <div class="this_moon">2025 年 12 月</div>
+            <a href="#" style="color: #ccc;">▶</a>
+        </div>
+
+        <table class="calendar-table">
+            <thead>
+                <tr>
+                    <th class="week weekend">日</th>
+                    <th class="week">一</th>
+                    <th class="week">二</th>
+                    <th class="week">三</th>
+                    <th class="week">四</th>
+                    <th class="week">五</th>
+                    <th class="week weekend">六</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="date date_gray"><div class="date_number">30</div></td>
+                    <td class="date date_blue">
+                        <div class="date_number">01</div>
+                        <div class="attendance">12</div>
+                        <div class="date_sentry">大台北控</div>
+                    </td>
+                    <td class="date date_white">
+                        <div class="date_number">02</div>
+                        <div class="attendance rest_ed">休</div>
+                    </td>
+                    <td class="date date_blue">
+                        <div class="date_number">03</div>
+                        <div class="attendance">12</div>
+                        <div class="date_sentry">新時代</div>
+                    </td>
+                    <td class="date date_blue">
+                        <div class="date_number">04</div>
+                        <div class="attendance">12</div>
+                        <div class="date_sentry">永和世家</div>
+                    </td>
+                    <td class="date date_pink">
+                        <div class="date_number">05</div>
+                        <div class="attendance">12</div>
+                        <div class="date_sentry">中山首府</div>
+                    </td>
+                    <td class="date date_white">
+                        <div class="date_number">06</div>
+                        <div class="attendance rest_ed">休</div>
+                    </td>
+                </tr>
+                </tbody>
+        </table>
+    </div>
+
+    <div class="container_r">
+        <h2>薪資明細</h2>
+        <table class="salary-table">
+            <tr><td class="title">本月應休</td><td class="data">大7小6</td></tr>
+            <tr><td class="title">月薪</td><td class="data">$36,000</td></tr>
+            <tr><td class="title">實發薪資</td><td class="data">$35,500</td></tr>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
