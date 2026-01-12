@@ -40,7 +40,7 @@
             flex: 2;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            /* box-shadow: 0 4px 6px rgba(0,0,0,0.05); */
             padding: 20px;
         }
 
@@ -49,7 +49,7 @@
             flex: 1;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            /* box-shadow: 0 4px 6px rgba(0,0,0,0.05); */
             padding: 20px;
             height: fit-content;
         }
@@ -72,10 +72,11 @@
 
         .this_moon { font-size: 20px; font-weight: 800; }
 
+        /* 表格基礎設定 */
         .calendar-table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed; 
+            table-layout: fixed; /* 確保七格均分螢幕寬度 */
         }
 
         .calendar-table th {
@@ -110,8 +111,9 @@
             word-break: break-all;
         }
 
+        /* --- 核心修改：針對手機版滿版優化 --- */
         @media (max-width: 768px) {
-            body { padding: 10px 0; } 
+            body { padding: 10px 0; } /* 移除 body 左右留白 */
             
             .main-wrapper { 
                 flex-direction: column; 
@@ -119,22 +121,23 @@
             }
 
             .container_l {
-                padding: 10px 5px; 
-                border-radius: 0; 
+                padding: 10px 5px; /* 縮小月曆容器內距 */
+                border-radius: 0; /* 手機版通常滿版不需圓角 */
             }
 
             .calendar-table td {
-                height: 85px; 
+                height: 85px; /* 手機版略微降低高度以免過長 */
             }
 
             .date_number { font-size: 14px; }
             .attendance { font-size: 16px; margin: 4px 0; padding-bottom: 8px;}
         }
 
+        /* 針對 iPhone SE 等極窄螢幕的拆行處理 */
         @media (max-width: 480px) {
             .date_sentry {
                 font-size: 13px;
-                max-width: 2.1em; 
+                max-width: 2.1em; /* 強制 3-4 字拆成兩行 */
                 margin: 0 auto;
             }
         }
