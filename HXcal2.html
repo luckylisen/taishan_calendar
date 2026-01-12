@@ -27,12 +27,19 @@
             align-items: center;
         }
 
+        /* RWD 容器佈局 */
         .main-wrapper {
             display: flex;
             flex-direction: row;
             gap: 24px;
             max-width: 1200px;
             width: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
         }
 
         /* 左側月曆區 */
@@ -42,6 +49,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             padding: 20px;
+            overflow-x: auto;
         }
 
         /* 右側薪資區 */
@@ -54,7 +62,7 @@
             height: fit-content;
         }
 
-        /* 導航標題 */
+        /* 導航標題樣式 */
         .calendar-nav {
             display: flex;
             justify-content: space-between;
@@ -70,23 +78,33 @@
             border-radius: 6px;
         }
 
-        .this_moon { font-size: 20px; font-weight: 800; }
+        .calendar-nav a:hover {
+            background: var(--primary-blue);
+        }
 
-        /* 表格基礎設定 */
+        .this_moon {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        /* 月曆表格樣式 */
         .calendar-table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed; /* 確保七格均分螢幕寬度 */
+            table-layout: fixed;
         }
 
         .calendar-table th {
-            padding: 12px 4px;
+            background-color: #fff;
+            color: var(--text-main);
+            padding: 12px;
             border-bottom: 2px solid var(--border-color);
             font-weight: 600;
         }
 
         th.week {
-            font-family: Impact, sans-serif;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-weight:bold;
             background-color:#1976d2;
             color: white;
         }
@@ -96,53 +114,52 @@
             border: 1px solid var(--border-color);
             height: 100px;
             vertical-align: top;
-            padding: 8px 4px;
+            padding: 8px;
             position: relative;
         }
 
-        .date_number { font-size: 16px; font-weight: bold; }
-        .attendance { font-size: 18px; font-weight: bold; text-align: center; margin: 8px 0; }
-        
-        /* 哨所名稱樣式 */
+        /* 日期數字 */
+        .date_number {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        /* 出勤狀態 */
+        .attendance {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin: 8px 0;
+        }
+
+        /* 出勤哨所樣式優化 */
         .date_sentry {
             font-size: 15px;
             text-align: center;
             line-height: 1.2;
-            word-break: break-all;
+            word-break: break-all; /* 允許在字元間斷行 */
+            margin: 0 auto;
         }
 
-        /* --- 核心修改：針對手機版滿版優化 --- */
-        @media (max-width: 768px) {
-            body { padding: 10px 0; } /* 移除 body 左右留白 */
-            
-            .main-wrapper { 
-                flex-direction: column; 
-                gap: 12px;
-            }
-
-            .container_l {
-                padding: 10px 5px; /* 縮小月曆容器內距 */
-                border-radius: 0; /* 手機版通常滿版不需圓角 */
-            }
-
-            .calendar-table td {
-                height: 85px; /* 手機版略微降低高度以免過長 */
-            }
-
-            .date_number { font-size: 14px; }
-            .attendance { font-size: 16px; margin: 4px 0; }
-        }
-
-        /* 針對 iPhone SE 等極窄螢幕的拆行處理 */
+        /* 當螢幕寬度小於 480px (如 iPhone SE) 時的特殊處理 */
         @media (max-width: 480px) {
+            .calendar-table td {
+                height: 90px; /* 稍微縮減高度 */
+                padding: 4px 2px;
+            }
             .date_sentry {
-                font-size: 13px;
-                max-width: 2.1em; /* 強制 3-4 字拆成兩行 */
-                margin: 0 auto;
+                font-size: 13px; /* 縮小字體以利排版 */
+                max-width: 2.1em; /* 限制寬度僅能容納約兩個中文字，強制 3-4 字拆行 */
+                display: block;
+            }
+            .attendance {
+                font-size: 16px;
+                margin: 4px 0;
             }
         }
 
-        /* 顏色樣式 */
+        /* 狀態顏色 */
         td.date_blue { background-color: lightblue; color: white; }
         td.date_pink { background-color: lightpink; color: white; }
         td.date_gray { background-color: lightgrey; color: aliceblue; }
@@ -150,21 +167,43 @@
         .rest_be { color: #ff5252; }
         .rest_ed { color: lightgray; }
 
-        .salary-table { width: 100%; border-collapse: collapse; }
-        .salary-table td { padding: 12px 8px; border-bottom: 1px solid var(--border-color); }
-        .salary-table .data { text-align: right; font-weight: 600; }
-        .salary-table tr:last-child td { color: var(--primary-text-pink); font-size: 18px; border-bottom: none; }
+        /* 薪資表格 */
+        .salary-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .salary-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .salary-table .title {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .salary-table .data {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .salary-table tr:last-child td {
+            border-bottom: none;
+            color: var(--primary-text-pink);
+            font-size: 18px;
+        }
+
         h2 { margin-top: 0; font-size: 20px; border-left: 4px solid var(--primary-text-blue); padding-left: 10px; }
     </style>
 </head>
 <body>
-
 <div class="main-wrapper">
     <div class="container_l">
         <div class="calendar-nav">
-            <a href="#">◀</a>
+            <a href="#">◀ 前一月</a>
             <div class="this_moon">2025 年 12 月</div>
-            <a href="#" style="color: #ccc;">▶</a>
+            <a href="#" style="color: #ccc;">後一月 ▶</a>
         </div>
 
         <table class="calendar-table">
@@ -181,46 +220,251 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="date date_gray"><div class="date_number">30</div></td>
-                    <td class="date date_blue">
-                        <div class="date_number">01</div>
-                        <div class="attendance">12</div>
-                        <div class="date_sentry">大台北控</div>
-                    </td>
-                    <td class="date date_white">
-                        <div class="date_number">02</div>
-                        <div class="attendance rest_ed">休</div>
-                    </td>
-                    <td class="date date_blue">
-                        <div class="date_number">03</div>
-                        <div class="attendance">12</div>
-                        <div class="date_sentry">新時代</div>
-                    </td>
-                    <td class="date date_blue">
-                        <div class="date_number">04</div>
-                        <div class="attendance">12</div>
-                        <div class="date_sentry">永和世家</div>
-                    </td>
-                    <td class="date date_pink">
-                        <div class="date_number">05</div>
-                        <div class="attendance">12</div>
-                        <div class="date_sentry">中山首府</div>
-                    </td>
-                    <td class="date date_white">
-                        <div class="date_number">06</div>
-                        <div class="attendance rest_ed">休</div>
-                    </td>
-                </tr>
-                </tbody>
+                <td class="date date_gray">
+                    <div class="date_number">30</div>
+                    <div class="attendance"></div>
+                    <div class="date_sentry"></div>
+                </td>
+                <td class="date date_blue">
+                    <div class="date_number">01</div>
+                    <div class="attendance">12</div>
+                    <div class="date_sentry">大台北控</div>
+                    </div>
+                </td>
+                <td class="date date_white">
+                    <div class="date_number">02</div>
+                    <div class="attendance rest_ed">休</div>
+                    <div class="date_sentry"></div>
+                    </div>
+                </td>
+                <td class="date date_blue">
+                    <div class="date_number">03</div>
+                    <div class="attendance">12</div>
+                    <div class="date_sentry">新時代</div>
+                    </div>
+                </td>
+                <td class="date date_blue">
+                    <div class="date_number">04</div>
+                    <div class="attendance">12</div>
+                    <div class="date_sentry">永和世家</div>
+                    </div>
+                </td>
+                <td class="date date_pink">
+                    <div class="date_number">05</div>
+                    <div class="attendance">12</div>
+                    <div class="date_sentry">中山首府</div>
+                    </div>
+                </td>
+                <td class="date date_white">
+                    <div class="date_number">06</div>
+                    <div class="attendance rest_ed">休</div>
+                    <div class="date_sentry"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="date date_blue">
+                    <div class="date_number">07</div>
+                    <div class="attendance">12</div>
+                    <div class="date_sentry">永和世家</div>
+                    </div>
+                </td>
+                <td class="date date_blue">
+                    <div class="date_number">08</div>
+                    <div class="attendance">12</div>
+                    <div class="date_sentry">永和世家</div>
+                    </div>
+                </td>
+                <td class="date date_blue">
+                    <div class="date_number">09</div>
+                    <div class="attendance">12</div>
+                    <div class="date_sentry">永和世家</div>
+                    </div>
+                </td>
+                <td class="date date_white">
+                    <div class="date_number">10</div>
+                    <div class="attendance rest_ed">休</div>
+                    <div class="date_sentry"></div>
+                    </div>
+                </td>
+                <td class="date date_pink">
+                    <div class="date_number">11</div>
+                    <div class="attendance">12</div>
+                    <div class="date_sentry">藝術賞</div>
+                    </div>
+                </td>
+                <td class="date date_pink">
+                    <div class="date_number">12</div>
+                    <div class="attendance">12</div>
+                    <div class="date_sentry">藝術賞</div>
+                    </div>
+                </td>
+                <td class="date date_pink">
+                    <div class="date_number">13</div>
+                    <div class="attendance">12</div>
+                    <div class="date_sentry">藝術賞</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="date">
+                    <div class="date_number">14</div>
+                    <div class="attendance rest_be">休</div>
+                    <div class="date_sentry"></div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">15</div>
+                    <div class="attendance">夜</div>
+                    <div class="date_sentry">中山首府</div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">16</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">中山首府</div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">17</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">永和世家</div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">18</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">中山首府</div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">19</div>
+                    <div class="attendance rest_be">休</div>
+                    <div class="date_sentry"></div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">20</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">永和世家</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="date">
+                    <div class="date_number">21</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">永和世家</div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">22</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">永和世家</div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">23</div>
+                    <div class="attendance rest_be">休</div>
+                    <div class="date_sentry"></div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">24</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">藝術賞</div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">25</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">藝術賞</div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">26</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">藝術賞</div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">27</div>
+                    <div class="attendance">夜</div>
+                    <div class="date_sentry">藝術賞</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="date">
+                    <div class="date_number">28</div>
+                    <div class="attendance rest_be">休</div>
+                    <div class="date_sentry"></div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">29</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">敦南一品</div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">30</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">敦南一品</div>
+                    </div>
+                </td>
+                <td class="date">
+                    <div class="date_number">31</div>
+                    <div class="attendance">日</div>
+                    <div class="date_sentry">敦南一品</div>
+                    </div>
+                </td>
+                <td class="date date_gray">
+                    <div class="date_number">01</div>
+                    <div class="attendance"></div>
+                    <div class="date_sentry"></div>
+                    </div>
+                </td>
+                <td class="date date_gray">
+                    <div class="date_number">02</div>
+                    <div class="attendance"></div>
+                    <div class="date_sentry"></div>
+                    </div>
+                </td>
+                <td class="date date_gray">
+                    <div class="date_number">03</div>
+                    <div class="attendance"></div>
+                    <div class="date_sentry"></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
         </table>
     </div>
 
     <div class="container_r">
-        <h2>薪資明細</h2>
+        <h2>本月薪資明細</h2>
         <table class="salary-table">
-            <tr><td class="title">本月應休</td><td class="data">大7小6</td></tr>
-            <tr><td class="title">月薪</td><td class="data">$36,000</td></tr>
-            <tr><td class="title">實發薪資</td><td class="data">$35,500</td></tr>
+            <tr>
+                <td class="title">本月應休</td>
+                <td class="data">大7小6</td>
+            </tr>
+            <tr>
+                <td class="title">月薪</td>
+                <td class="data">$36,000</td>
+            </tr>
+            <tr>
+                <td class="title">互助金</td>
+                <td class="data">-$200</td>
+            </tr>
+            <tr>
+                <td class="title">綜合保險</td>
+                <td class="data">-$300</td>
+            </tr>
+            <tr>
+                <td class="title">實發薪資</td>
+                <td class="data">$35,500</td>
+            </tr>
         </table>
     </div>
 </div>
