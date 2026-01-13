@@ -3,31 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人排班與薪資明細</title>
+    <title>排班與薪資明細</title>
     <style>
-        :root {
-            --primary-blue: #e3f2fd;
-            --primary-text-blue: #1976d2;
-            --primary-pink: #fce4ec;
-            --primary-text-pink: #d81b60;
-            --gray-bg: #f5f5f5;
-            --border-color: #e0e0e0;
-            --text-main: #333;
-            --text-muted: #888;
-        }
-
         body {
             font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
             background-color: #f8f9fa;
+            color: #2e2d2d;
             margin: 0;
             padding: 20px;
-            color: var(--text-main);
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* RWD 容器佈局 */
         .main-wrapper {
             display: flex;
             flex-direction: row;
@@ -36,20 +24,13 @@
             width: 100%;
         }
 
-        @media (max-width: 992px) {
-            .main-wrapper {
-                flex-direction: column;
-            }
-        }
-
         /* 左側月曆區 */
         .container_l {
             flex: 2;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px #eeeded;
             padding: 20px;
-            overflow-x: auto;
         }
 
         /* 右側薪資區 */
@@ -57,155 +38,118 @@
             flex: 1;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px #eeeded;
             padding: 20px;
             height: fit-content;
         }
 
-        /* 導航標題樣式 */
+        /* 導航標題 */
         .calendar-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
-        .calendar-nav a {
-            text-decoration: none;
-            color: var(--primary-text-blue);
-            font-weight: bold;
-            padding: 8px 16px;
-            border-radius: 6px;
-        }
+        .last_moon { color:#1976d2; font-weight: 600;}
+        .this_moon { font-size: 20px; font-weight: 800;}
+        .next_moon { color:#d1d0d0; font-weight: 600;}
 
-        .calendar-nav a:hover {
-            background: var(--primary-blue);
-        }
-
-        .this_moon {
-            font-size: 20px;
-            font-weight: 800;
-        }
-
-        /* 月曆表格樣式 */
         .calendar-table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed;
+            table-layout: fixed; 
         }
 
         .calendar-table th {
-            background-color: #fff;
-            color: var(--text-main);
-            padding: 12px;
-            border-bottom: 2px solid var(--border-color);
+            padding: 10px 0;
             font-weight: 600;
         }
 
+        /* 星期表頭(1~5) */
         th.week {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-weight:bold;
+            font-family: Impact, sans-serif;
             background-color:#1976d2;
             color: white;
         }
+
+        /* 星期表頭(6.日)*/
         th.weekend { color: #ff5252; }
 
+        /* 日期格 */
         .calendar-table td {
-            border: 1px solid var(--border-color);
-            height: 100px;
+            border: 1px solid #e0e0e0;
+            /* height: 84px; */
             vertical-align: top;
-            padding: 8px;
+            padding: 8px 4px;
             position: relative;
         }
 
-        /* 日期數字 */
-        .date_number {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
+        /* 格內日期 */
+        .date_number { font-size: 16px; font-weight: bold; }
+        /* 日班.夜班人員 */
+        .name_dayer {font-size: 15px; text-align: center; background: lightpink;}
+        .name_night {font-size: 15px; text-align: center; background: lightblue;}
 
-        /* 出勤狀態 */
-        .attendance {
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            margin: 8px 0;
-        }
+        /*平板端RWD*/
+        @media (max-width: 768px) {
+            body { padding: 10px 0; } 
+            
+            .main-wrapper { 
+                flex-direction: column; 
+                gap: 12px;
+            }
+            /* 月曆塊 */
+            .container_l {
+                padding: 10px 5px; 
+                border-radius: 0; 
+            }
 
-        /* 出勤哨所樣式優化 */
-        .date_sentry {
-            font-size: 15px;
-            text-align: center;
-            line-height: 1.2;
-            word-break: break-all; /* 允許在字元間斷行 */
-            margin: 0 auto;
-        }
-
-        /* 當螢幕寬度小於 480px (如 iPhone SE) 時的特殊處理 */
-        @media (max-width: 480px) {
             .calendar-table td {
-                height: 90px; /* 稍微縮減高度 */
-                padding: 4px 2px;
+                height: 50px; 
             }
-            .date_sentry {
-                font-size: 13px; /* 縮小字體以利排版 */
-                max-width: 2.1em; /* 限制寬度僅能容納約兩個中文字，強制 3-4 字拆行 */
-                display: block;
-            }
-            .attendance {
-                font-size: 16px;
-                margin: 4px 0;
-            }
+            /* 格內日期 */
+            .date_number { font-size: 15px; }
+            /* 格內時數 */
+            .name_dayer { font-size: 15px;}
+            .name_night { font-size: 15px;}
         }
 
-
-
-        /* 狀態顏色 */
-        td.date_blue { background-color: lightblue; color: white; }
-        td.date_pink { background-color: lightpink; color: white; }
-        td.date_gray { background-color: lightgrey; color: aliceblue; }
-        td.date_white { color: lightgray;}
-        .rest_be { color: #ff5252; }
-        .rest_ed { color: lightgray; }
-
-        /* 薪資表格 */
-        .salary-table {
-            width: 100%;
-            border-collapse: collapse;
+        /*手機端RWD*/        
+        @media (max-width: 480px) {
+            .name_dayer { font-size: 13px;}
+            .name_night { font-size: 13px;}
         }
 
-        .salary-table td {
-            padding: 12px 8px;
-            border-bottom: 1px solid var(--border-color);
-        }
+        /* 已出勤(夜) */
+        /* td.date_blue { background-color: lightblue; color: white; } */
+        /* 已出勤(日) */
+        /* td.date_pink { background-color: lightpink; color: white; } */
+        /* 前後月 */
+        td.date_gray { background-color: lightgrey; color: white; } 
+        /* 已休假 */
+        /* td.date_white { color: lightgray;} */
 
-        .salary-table .title {
-            color: var(--text-muted);
-            font-size: 16px;
-        }
+        /* 待休日 */
+        /* span.rest { color: #ff5252; } */
+        /* 必修日 */
+        /* span.rest_be {background: #ff5252; color: white; padding: 0 3px; border-radius: 3px; } */
 
-        .salary-table .data {
-            text-align: right;
-            font-weight: 600;
-        }
-
-        .salary-table tr:last-child td {
-            border-bottom: none;
-            color: var(--primary-text-pink);
-            font-size: 18px;
-        }
-
-        h2 { margin-top: 0; font-size: 20px; border-left: 4px solid var(--primary-text-blue); padding-left: 10px; }
+        /* 薪資明細 */
+        .salary-table { width: 100%; border-collapse: collapse; }
+        .salary-table td { padding: 12px 8px; border-bottom: 1px solid #e0e0e0; }
+        .salary-table .data { text-align: right; font-weight: 600; }
+        .salary-table tr:last-child td { color: #d81b60; font-size: 18px; border-bottom: none; }
+        h2 { margin-top: 0; font-size: 20px; border-left: 4px solid #1976d2; padding-left: 10px; }
     </style>
 </head>
 <body>
 <div class="main-wrapper">
     <div class="container_l">
         <div class="calendar-nav">
-            <a href="#">◀ 前一月</a>
-            <div class="this_moon">2025-12</div>
-            <a href="#" style="color: #ccc;">後一月 ▶</a>
+            <div class="last_moon" a href="#">◀ 前1月</a></div>
+            <div class="this_moon">2025年12月</div>
+            <div class="next_moon" a href="#">後1月 ▶</a></div>
         </div>
 
         <table class="calendar-table">
@@ -224,219 +168,219 @@
                 <tr>
                 <td class="date date_gray">
                     <div class="date_number">30</div>
-                    <div class="attendance"></div>
-                    <div class="date_sentry"></div>
+                    <div class="name_dayer"></div>
+                    <div class="name_night"></div>
                 </td>
                 <td class="date date_blue">
                     <div class="date_number">01</div>
-                    <div class="attendance">12</div>
-                    <div class="date_sentry">大台北控</div>
+                    <div class="name_dayer">呂永川</div>
+                    <div class="name_night">林敏隆</div>
                     </div>
                 </td>
                 <td class="date date_white">
                     <div class="date_number">02</div>
-                    <div class="attendance rest_ed">休</div>
-                    <div class="date_sentry"></div>
+                    <div class="name_dayer">王民雄</div>
+                    <div class="name_night">張國志</div>
                     </div>
                 </td>
                 <td class="date date_blue">
                     <div class="date_number">03</div>
-                    <div class="attendance">12</div>
-                    <div class="date_sentry">新時代</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">新時代</div>
                     </div>
                 </td>
                 <td class="date date_blue">
                     <div class="date_number">04</div>
-                    <div class="attendance">12</div>
-                    <div class="date_sentry">永和世家</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">鍾文明</div>
                     </div>
                 </td>
                 <td class="date date_pink">
                     <div class="date_number">05</div>
-                    <div class="attendance">12</div>
-                    <div class="date_sentry">中山首府</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">林中山</div>
                     </div>
                 </td>
                 <td class="date date_white">
                     <div class="date_number">06</div>
-                    <div class="attendance rest_ed">休</div>
-                    <div class="date_sentry"></div>
+                    <div class="name_dayer">王民雄</div>
+                    <div class="name_night">林中山</div>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td class="date date_blue">
                     <div class="date_number">07</div>
-                    <div class="attendance">12</div>
-                    <div class="date_sentry">永和世家</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">鍾文明</div>
                     </div>
                 </td>
                 <td class="date date_blue">
                     <div class="date_number">08</div>
-                    <div class="attendance">12</div>
-                    <div class="date_sentry">永和世家</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">鍾文明</div>
                     </div>
                 </td>
                 <td class="date date_blue">
                     <div class="date_number">09</div>
-                    <div class="attendance">12</div>
-                    <div class="date_sentry">永和世家</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">鍾文明</div>
                     </div>
                 </td>
                 <td class="date date_white">
                     <div class="date_number">10</div>
-                    <div class="attendance rest_ed">休</div>
-                    <div class="date_sentry"></div>
+                    <div class="name_dayer">王民雄</div>
+                    <div class="name_night">王金龍</div>
                     </div>
                 </td>
                 <td class="date date_pink">
                     <div class="date_number">11</div>
-                    <div class="attendance">12</div>
-                    <div class="date_sentry">藝術賞</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">藝術賞</div>
                     </div>
                 </td>
                 <td class="date date_pink">
                     <div class="date_number">12</div>
-                    <div class="attendance">12</div>
-                    <div class="date_sentry">藝術賞</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">藝術賞</div>
                     </div>
                 </td>
                 <td class="date date_pink">
                     <div class="date_number">13</div>
-                    <div class="attendance">12</div>
-                    <div class="date_sentry">藝術賞</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">藝術賞</div>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td class="date">
                     <div class="date_number">14</div>
-                    <div class="attendance rest_be">休</div>
-                    <div class="date_sentry"></div>
+                    <div class="name_dayer"><span class="rest_be">王博智</span></div>
+                    <div class="name_night">林中山</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">15</div>
-                    <div class="attendance">夜</div>
-                    <div class="date_sentry">中山首府</div>
+                    <div class="name_dayer">王博智</div>
+                    <div class="name_night">林中山</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">16</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">中山首府</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">林中山</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">17</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">永和世家</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">鍾文明</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">18</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">中山首府</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">林中山</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">19</div>
-                    <div class="attendance rest_be">休</div>
-                    <div class="date_sentry"></div>
+                    <div class="name_dayer"><span class="rest_be">王博智</span></div>
+                    <div class="name_night">林中山</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">20</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">永和世家</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">鍾文明</div>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td class="date">
                     <div class="date_number">21</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">永和世家</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">鍾文明</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">22</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">永和世家</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">鍾文明</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">23</div>
-                    <div class="attendance rest_be">休</div>
-                    <div class="date_sentry"></div>
+                    <div class="name_dayer"><span class="rest">王曉霞</span></div>
+                    <div class="name_night">林中山</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">24</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">藝術賞</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">藝術賞</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">25</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">藝術賞</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">藝術賞</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">26</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">藝術賞</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">藝術賞</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">27</div>
-                    <div class="attendance">夜</div>
-                    <div class="date_sentry">藝術賞</div>
+                    <div class="name_dayer">林敏玲</div>
+                    <div class="name_night">藝術賞</div>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td class="date">
                     <div class="date_number">28</div>
-                    <div class="attendance rest_be">休</div>
-                    <div class="date_sentry"></div>
+                    <div class="name_dayer"><span class="rest">王曉霞</span></div>
+                    <div class="name_night">王博智</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">29</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">敦南一品</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">鍾文明</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">30</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">敦南一品</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">鍾文明</div>
                     </div>
                 </td>
                 <td class="date">
                     <div class="date_number">31</div>
-                    <div class="attendance">日</div>
-                    <div class="date_sentry">敦南一品</div>
+                    <div class="name_dayer">鍾文明</div>
+                    <div class="name_night">鍾文明</div>
                     </div>
                 </td>
                 <td class="date date_gray">
                     <div class="date_number">01</div>
-                    <div class="attendance"></div>
-                    <div class="date_sentry"></div>
+                    <div class="name_dayer"></div>
+                    <div class="name_night"></div>
                     </div>
                 </td>
                 <td class="date date_gray">
                     <div class="date_number">02</div>
-                    <div class="attendance"></div>
-                    <div class="date_sentry"></div>
+                    <div class="name_dayer"></div>
+                    <div class="name_night"></div>
                     </div>
                 </td>
                 <td class="date date_gray">
                     <div class="date_number">03</div>
-                    <div class="attendance"></div>
-                    <div class="date_sentry"></div>
+                    <div class="name_dayer"></div>
+                    <div class="name_night"></div>
                     </div>
                 </td>
             </tr>
