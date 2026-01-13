@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人排班與薪資明細</title>
+    <title>排班與薪資明細</title>
     <style>
         body {
             font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
@@ -66,13 +66,17 @@
             font-weight: 600;
         }
 
+        /* 星期表頭(1~5) */
         th.week {
             font-family: Impact, sans-serif;
             background-color:#1976d2;
             color: white;
         }
+
+        /* 星期表頭(6.日)*/
         th.weekend { color: #ff5252; }
 
+        /* 日期格 */
         .calendar-table td {
             border: 1px solid #e0e0e0;
             height: 100px;
@@ -81,7 +85,9 @@
             position: relative;
         }
 
+        /* 格內日期 */
         .date_number { font-size: 16px; font-weight: bold; }
+        /* 格內時數 */
         .attendance { font-size: 18px; font-weight: bold; text-align: center; margin: 8px 0; }
         
         /* 哨所名稱樣式 */
@@ -92,6 +98,7 @@
             /* word-break: break-all; */
         }
 
+        /*平板端RWD*/
         @media (max-width: 768px) {
             body { padding: 10px 0; } 
             
@@ -108,12 +115,13 @@
             .calendar-table td {
                 height: 85px; 
             }
-            /* 日期 */
+            /* 格內日期 */
             .date_number { font-size: 14px; }
-            /* 時數&日夜 */
+            /* 格內時數 */
             .attendance { font-size: 16px; margin: 10px 0; padding-bottom: 5px;}
         }
 
+        /*手機端RWD*/        
         @media (max-width: 480px) {
             .date_sentry {
                 font-size: 13px;
@@ -122,20 +130,19 @@
             }
         }
 
-        /* 已出勤-晚班 */
+        /* 已出勤(夜) */
         td.date_blue { background-color: lightblue; color: white; }
-        /* 已出勤-日班 */
+        /* 已出勤(日) */
         td.date_pink { background-color: lightpink; color: white; }
-        /* 前後月日期 */
+        /* 前後月 */
         td.date_gray { background-color: lightgrey; color: white; } 
-        /* 待出勤 */
+        /* 已休假 */
         td.date_white { color: lightgray;}
+
         /* 待休日 */
-        .rest_be { color: #ff5252; }
+        span.rest { color: #ff5252; }
         /* 必修日 */
-        .rest_be>span {background: #ff5252; color: white; padding: 1px 3px; border-radius: 5px; }
-        /* 已休日 */
-        .rest_ed { color: lightgray; }
+        span.rest_be {background: #ff5252; color: white; padding: 0 2px; border-radius: 6px; }
 
         /* 薪資明細 */
         .salary-table { width: 100%; border-collapse: collapse; }
@@ -181,7 +188,7 @@
                 </td>
                 <td class="date date_white">
                     <div class="date_number">02</div>
-                    <div class="attendance rest_ed">休</div>
+                    <div class="attendance">休</div>
                     <div class="date_sentry"></div>
                     </div>
                 </td>
@@ -205,7 +212,7 @@
                 </td>
                 <td class="date date_white">
                     <div class="date_number">06</div>
-                    <div class="attendance rest_ed">休</div>
+                    <div class="attendance">休</div>
                     <div class="date_sentry"></div>
                     </div>
                 </td>
@@ -231,7 +238,7 @@
                 </td>
                 <td class="date date_white">
                     <div class="date_number">10</div>
-                    <div class="attendance rest_ed">休</div>
+                    <div class="attendance">休</div>
                     <div class="date_sentry"></div>
                     </div>
                 </td>
@@ -257,7 +264,7 @@
             <tr>
                 <td class="date">
                     <div class="date_number">14</div>
-                    <div class="attendance rest_be"><span>休</span></div>
+                    <div class="attendance"><span class="rest_be">休</span></div>
                     <div class="date_sentry"></div>
                     </div>
                 </td>
@@ -287,7 +294,7 @@
                 </td>
                 <td class="date">
                     <div class="date_number">19</div>
-                    <div class="attendance rest_be">休</div>
+                    <div class="attendance"><span class="rest_be">休</span></div>
                     <div class="date_sentry"></div>
                     </div>
                 </td>
@@ -313,7 +320,7 @@
                 </td>
                 <td class="date">
                     <div class="date_number">23</div>
-                    <div class="attendance rest_be">休</div>
+                    <div class="attendance"><span class="rest">休</span></div>
                     <div class="date_sentry"></div>
                     </div>
                 </td>
@@ -345,7 +352,7 @@
             <tr>
                 <td class="date">
                     <div class="date_number">28</div>
-                    <div class="attendance rest_be">休</div>
+                    <div class="attendance"><span class="rest">休</span></div>
                     <div class="date_sentry"></div>
                     </div>
                 </td>
