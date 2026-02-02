@@ -511,7 +511,7 @@ function checkLogin() {
         if (data.success) {
             // 登錄成功：移除模糊層
             document.getElementById("login-overlay").style.display = "none";
-            // sessionStorage：記住登錄狀態
+            // 建議：可以用 sessionStorage 記住登錄狀態，防止刷新頁面後又要重新登錄
             sessionStorage.setItem('isLoggedIn', 'true');
         } else {
             // 登錄失敗
